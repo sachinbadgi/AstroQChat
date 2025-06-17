@@ -174,3 +174,13 @@ export const useVerifyTwoFactorTempMutation = (
     },
   );
 };
+
+export const useUpdateAstroProfile = (
+  options?: t.MutationOptions<unknown, { dateOfBirth: string; timeOfBirth: string; placeOfBirth: string }>,
+): UseMutationResult<unknown, unknown, { dateOfBirth: string; timeOfBirth: string; placeOfBirth: string }, unknown> => {
+  return useMutation(['updateAstroProfile'], {
+    mutationFn: (payload: { dateOfBirth: string; timeOfBirth: string; placeOfBirth: string }) => 
+      dataService.put('/api/user/astroProfile', payload),
+    ...(options || {}),
+  });
+};

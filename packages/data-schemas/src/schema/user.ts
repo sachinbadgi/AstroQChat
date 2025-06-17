@@ -121,6 +121,15 @@ const userSchema = new Schema<IUser>(
     refreshToken: {
       type: [SessionSchema],
     },
+    dateOfBirth: {
+      type: String,
+    },
+    timeOfBirth: {
+      type: String,
+    },
+    placeOfBirth: {
+      type: String,
+    },
     expiresAt: {
       type: Date,
       expires: 604800, // 7 days in seconds

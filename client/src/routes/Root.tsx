@@ -6,6 +6,7 @@ import {
   useAssistantsMap,
   useAgentsMap,
   useFileMap,
+  useRequiresKey,
   useSearchEnabled,
 } from '~/hooks';
 import {
@@ -17,6 +18,7 @@ import {
 import TermsAndConditionsModal from '~/components/ui/TermsAndConditionsModal';
 import { useUserTermsQuery, useGetStartupConfig } from '~/data-provider';
 import { Nav, MobileNav } from '~/components/Nav';
+import AstroProfile from '~/components/Nav/SettingsTabs/AstroProfile/AstroProfile';
 import { useHealthCheck } from '~/data-provider';
 import { Banner } from '~/components/Banners';
 

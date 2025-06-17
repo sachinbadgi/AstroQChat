@@ -13,7 +13,7 @@ const {
   deletePresets,
   deleteMessages,
   deleteUserById,
-  deleteAllUserSessions,
+ deleteAllUserSessions,
 } = require('~/models');
 const { updateUserPluginAuth, deleteUserPluginAuth } = require('~/server/services/PluginService');
 const { updateUserPluginsService, deleteUserKey } = require('~/server/services/UserService');
@@ -23,10 +23,14 @@ const { processDeleteRequest } = require('~/server/services/Files/process');
 const { Transaction, Balance, User } = require('~/db/models');
 const { deleteAllSharedLinks } = require('~/models/Share');
 const { deleteToolCalls } = require('~/models/ToolCall');
+const { updateAstroProfile } = require('~/server/services/UserService');
 
 const getUserController = async (req, res) => {
   /** @type {MongoUser} */
   const userData = req.user.toObject != null ? req.user.toObject() : { ...req.user };
+  userData.dateOfBirth = req.user.dateOfBirth;
+  userData.timeOfBirth = req.user.timeOfBirth;
+  userData.placeOfBirth = req.user.placeOfBirth;
   delete userData.totpSecret;
   if (req.app.locals.fileStrategy === FileSources.s3 && userData.avatar) {
     const avatarNeedsRefresh = needsRefresh(userData.avatar, 3600);
@@ -211,6 +215,20 @@ const resendVerificationController = async (req, res) => {
   }
 };
 
+const updateAstroProfileController = async (req, res) => {
+  try {
+    const { dateOfBirth, timeOfBirth, placeOfBirth } = req.body;
+    const userId = req.user.id;
+
+    await updateAstroProfile(userId, { dateOfBirth, timeOfBirth, placeOfBirth });
+
+    res.status(200).send();
+  } catch (error) {
+    logger.error('[updateAstroProfileController]', error);
+    res.status(500).json({ message: 'Error updating astrological profile.' });
+  }
+};
+
 module.exports = {
   getUserController,
   getTermsStatusController,
@@ -219,4 +237,5 @@ module.exports = {
   verifyEmailController,
   updateUserPluginsController,
   resendVerificationController,
+  updateAstroProfileController,
 };

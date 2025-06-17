@@ -151,6 +151,22 @@ const deleteUserKey = async ({ userId, name, all = false }) => {
 };
 
 /**
+ * Updates the astrological profile for a user.
+ * @async
+ * @param {string} userId - The unique identifier for the user.
+ * @param {string} dateOfBirth - The user's date of birth.
+ * @param {string} timeOfBirth - The user's time of birth.
+ * @param {string} placeOfBirth - The user's place of birth.
+ * @returns {Promise<Object>} The updated user document.
+ * @throws {Error} Throws an error if the update operation fails.
+ */
+const updateAstroProfile = async (userId, { dateOfBirth, timeOfBirth, placeOfBirth }) => {
+  // Assuming updateUser is a function that updates a user document by ID
+  // and returns the updated document or throws an error on failure.
+  return await updateUser(userId, { dateOfBirth, timeOfBirth, placeOfBirth });
+};
+
+/**
  * Checks if a user key has expired based on the provided expiration date and endpoint.
  * If the key has expired, it throws an Error with details including the type of error, the expiration date, and the endpoint.
  *
@@ -179,4 +195,5 @@ module.exports = {
   getUserKeyExpiry,
   checkUserKeyExpiry,
   updateUserPluginsService,
+  updateAstroProfile,
 };

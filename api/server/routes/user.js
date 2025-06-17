@@ -8,6 +8,7 @@ const {
   resendVerificationController,
   getTermsStatusController,
   acceptTermsController,
+  updateAstroProfileController,
 } = require('~/server/controllers/UserController');
 
 const router = express.Router();
@@ -19,5 +20,6 @@ router.post('/plugins', requireJwtAuth, updateUserPluginsController);
 router.delete('/delete', requireJwtAuth, canDeleteAccount, deleteUserController);
 router.post('/verify', verifyEmailController);
 router.post('/verify/resend', verifyEmailLimiter, resendVerificationController);
+router.put('/astroProfile', requireJwtAuth, updateAstroProfileController);
 
 module.exports = router;
